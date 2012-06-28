@@ -83,3 +83,36 @@ end
 dep 'hubot full installation' do
   requires 'hubot installation', 'hubot configuration', 'monit monitoring for hubot'
 end
+
+dep 'uninstall hubot app directory' do
+  met? {
+    !File.exists? "/home/protonet/apps/hubot"
+  }
+  meet {
+    log_shell "removing hubot app folder", "rm -rf /home/protonet/apps/hubot"
+  }
+end
+
+dep 'unregister hubot from monit' do
+  met? {
+    !shell("sudo monit status | grep hubot") && !File.exists?("/home/protonet/dashboard/shared/config/monit.d/hubot")
+  }
+
+  meet {
+    log_shell "removing hubot monit script", "rm /home/protonet/dashboard/shared/config/monit.d/hubot"
+    log_shell "unmonitoring hubot", "sudo monit reload"
+  }  
+end
+
+dep 'remove .hubot_environment_variables' do
+  met? {
+    !File.exists("/home/protonet/.hubot_environment_variables")
+  }
+  meet {
+    log_shell "removing hubot_environment_variables", "rm /home/protonet/.hubot_environment_variables"
+  }
+end
+
+dep 'hubot full uninstall' do
+  requires 'unregister hubot from monit', 'remove .hubot_environment_variables', "uninstall hubot app directory"
+end
