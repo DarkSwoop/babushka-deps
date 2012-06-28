@@ -23,3 +23,25 @@ end
 dep 'test_application install' do
   requires 'configuration', 'create tempfile'
 end
+
+dep 'remove configuration' do
+  met? {
+    !File.exists?("/home/protonet/test_application_env")
+  }
+  meet {
+    log_shell "remove test_application configuration", "rm /home/protonet/test_application_env"
+  }
+end
+
+dep 'remove tempfile' do
+  met? {
+    !File.exists?("/home/protonet/apps/test_application/test_file")
+  }
+  meet {
+    log_shell "removing tempfile", "rm /home/protonet/apps/test_application/test_file"
+  }
+end
+
+dep 'test_application full uninstall' do
+  requires 'remove configuration', 'remove tempfile'
+end
