@@ -44,11 +44,11 @@ dep 'hubot configuration' do
   }
   meet {
     hubot_environment_variables = <<-EOS
-export HUBOT_PROTONET_USER=#{ENV['APP_INSTALLER_HUBOT_PROTONET_USER']}
-export HUBOT_PROTONET_PASSWORD=#{ENV['APP_INSTALLER_HUBOT_PROTONET_PASSWORD']}
-export HUBOT_PROTONET_NODE_HOST=#{ENV['APP_INSTALLER_HUBOT_PROTONET_HOST']}
-export HUBOT_PROTONET_NODE_PORT=#{ENV['APP_INSTALLER_HUBOT_PROTONET_PORT']}
-export HUBOT_PROTONET_NODE_VERSION=#{ENV['APP_INSTALLER_HUBOT_PROTONET_VERSION']}
+export HUBOT_PROTONET_USER="#{ENV['APP_INSTALLER_HUBOT_PROTONET_USER']}"
+export HUBOT_PROTONET_PASSWORD="#{ENV['APP_INSTALLER_HUBOT_PROTONET_PASSWORD']}"
+export HUBOT_PROTONET_NODE_HOST="#{ENV['APP_INSTALLER_HUBOT_PROTONET_HOST']}"
+export HUBOT_PROTONET_NODE_PORT="#{ENV['APP_INSTALLER_HUBOT_PROTONET_PORT']}"
+export HUBOT_PROTONET_NODE_VERSION="#{ENV['APP_INSTALLER_HUBOT_PROTONET_VERSION']}"
     EOS
     shell("cat > /home/protonet/.hubot_environment_variables", :input => hubot_environment_variables)
   }
@@ -62,7 +62,9 @@ dep 'monit configuration for hubot' do
     monit_config = <<-EOS
 check hubot with pidfile /home/protonet/apps/hubot/hubot.pid
   start program = "/home/protonet/apps/hubot/hubot_start_script start"
+    as uid protonet and gid protonet
   stop program = "/home/protonet/apps/hubot/hubot_start_script stop"
+    as uid protonet and gid protonet
     EOS
     shell("cat > /home/protonet/dashboard/shared/config/monit.d/hubot", :input => monit_config)
   }
