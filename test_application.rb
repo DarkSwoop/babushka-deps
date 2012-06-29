@@ -1,3 +1,6 @@
+# needs
+# ENV['APP_INSTALLER_TEST_APPLICATION_CONFIGURATION']
+
 dep 'configuration' do
   met? {
     File.exists?("/home/protonet/test_application_env")
