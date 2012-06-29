@@ -55,9 +55,7 @@ dep "configure transmission" do
       "rpc-authentication-required": true
     }
     TRANSMISSION_CONFIG
-    File.open("/home/protonet/.config/transmission-daemon/settings.json", "w+") do |f|
-      f.write(transmission_configuration)
-    end
+    shell("cat > /home/protonet/.config/transmission-daemon/settings.json", :input => transmission_configuration)
   }
 end
 
