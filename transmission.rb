@@ -8,7 +8,7 @@ dep "transmission install" do
     shell 'dpkg -S transmission-daemon | grep "transmission-daemon: /usr/bin/transmission-daemon"'
   }
   meet {
-    log_shell "installing transmission", "sudo apt-get install transmission-daemon"
+    log_shell "installing transmission", "apt-get install transmission-daemon", :sudo => true
   }
 end
 
@@ -17,7 +17,7 @@ dep "disable transmission autostart" do
     !shell "ls -al /etc/rc1.d | grep transmission-daemon"
   }
   meet {
-    log_shell "disabling transmission automatic startup", "sudo update-rc.d -f transmission-daemon remove"
+    log_shell "disabling transmission automatic startup", "update-rc.d -f transmission-daemon remove", :sudo => true
   }
 end
 
@@ -26,7 +26,7 @@ dep "stop transmission service" do
     !shell("ps ax | grep transmission-daemon | grep -v grep")
   }
   meet {
-    log_shell "stopping transmission daemon", "sudo service transmission-daemon stop"
+    log_shell "stopping transmission daemon", "service transmission-daemon stop", :sudo => true
   }
 end
 
@@ -80,7 +80,7 @@ dep "transmission uninstall" do
     !shell 'dpkg -S transmission-daemon | grep "transmission-daemon: /usr/bin/transmission-daemon"'
   }
   meet {
-    log_shell "removing transmission", "sudo apt-get remove transmission-daemon"
+    log_shell "removing transmission", "apt-get -y remove --purge 'transmission-daemon'", :sudo => true
   }
 end
 
