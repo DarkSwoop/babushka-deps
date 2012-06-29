@@ -31,7 +31,7 @@ dep "stop transmission service" do
 end
 
 dep "configure transmission" do
-  requires 'stop transmission server'
+  requires 'stop transmission service'
   met? {
     File.exists?("/home/protonet/.config/transmission-daemon/setting.json")
   }
