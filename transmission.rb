@@ -42,7 +42,7 @@ end
 dep "configure transmission" do
   requires 'stop transmission service', 'transmission config directory'
   met? {
-    File.exists?("/home/protonet/.config/transmission-daemon/setting.json")
+    File.exists?("/home/protonet/.config/transmission-daemon/settings.json")
   }
   meet {
     transmission_configuration = <<-TRANSMISSION_CONFIG
@@ -55,7 +55,7 @@ dep "configure transmission" do
       "rpc-authentication-required": true
     }
     TRANSMISSION_CONFIG
-    shell("cat > /home/protonet/.config/transmission-daemon/settings.json", :input => transmission_configuration)
+    log_shell("writing configuration to settings.json", "cat > /home/protonet/.config/transmission-daemon/settings.json", :input => transmission_configuration)
   }
 end
 
