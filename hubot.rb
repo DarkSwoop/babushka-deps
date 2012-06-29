@@ -62,9 +62,7 @@ dep 'monit configuration for hubot' do
     monit_config = <<-EOS
 check hubot with pidfile /home/protonet/apps/hubot/hubot.pid
   start program = "/home/protonet/apps/hubot/hubot_start_script start"
-    as uid protonet and gid protonet
   stop program = "/home/protonet/apps/hubot/hubot_start_script stop"
-    as uid protonet and gid protonet
     EOS
     shell("cat > /home/protonet/dashboard/shared/config/monit.d/hubot", :input => monit_config)
   }
