@@ -23,7 +23,7 @@ end
 
 dep "stop transmission service" do
   met? {
-    !shell "ps ax | grep transmission-daemon"
+    !shell("ps ax | grep transmission-daemon | grep -v grep")
   }
   meet {
     log_shell "stopping transmission daemon", "sudo service transmission-daemon stop"
@@ -55,7 +55,7 @@ end
 
 dep "start transmission" do
   met? {
-    shell "ps ax | grep transmission-daemon"
+    shell "ps ax | grep transmission-daemon | grep -v grep"
   }
   meet {
     log_shell "starting transmission daemon", "transmission-daemon"
