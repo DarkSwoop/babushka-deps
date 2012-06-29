@@ -77,7 +77,7 @@ end
 
 dep "transmission uninstall" do
   met? {
-    !shell 'dpkg -S transmission-daemon | grep "transmission-daemon: /usr/bin/transmission-daemon"'
+    !File.exists? "/usr/bin/transmission-daemon"
   }
   meet {
     log_shell "removing transmission", "apt-get -y remove --purge 'transmission-daemon'", :sudo => true
