@@ -30,13 +30,21 @@ dep "stop transmission service" do
   }
 end
 
+dep 'transmission config directory' do
+  met? {
+    Dir.exists?("/home/protonet/.config/transmission-daemon")
+  }
+  meet {
+    log_shell "preparing config dir", "mkdir -p /home/protonet/.config/transmission-daemon"
+  }
+end
+
 dep "configure transmission" do
-  requires 'stop transmission service'
+  requires 'stop transmission service', 'transmission config directory'
   met? {
     File.exists?("/home/protonet/.config/transmission-daemon/setting.json")
   }
   meet {
-    log_shell "mkdir -p /home/protonet/.config/transmission-daemon", "mkdir -p /home/protonet/.config/transmission-daemon"
     transmission_configuration = <<-TRANSMISSION_CONFIG
     {
       "rpc-enabled": true,
