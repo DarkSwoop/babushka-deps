@@ -36,7 +36,7 @@ dep "configure transmission" do
     File.exists?("/home/protonet/.config/transmission-daemon/setting.json")
   }
   meet {
-    shell "mkdir -p /home/protonet/.config/transmission-daemon"
+    log_shell "mkdir -p /home/protonet/.config/transmission-daemon", "mkdir -p /home/protonet/.config/transmission-daemon"
     transmission_configuration = <<-TRANSMISSION_CONFIG
     {
       "rpc-enabled": true,
