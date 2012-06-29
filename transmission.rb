@@ -5,7 +5,7 @@
 
 dep "transmission install" do
   met? {
-    shell 'dpkg -S transmission-daemon | grep "transmission-daemon: /usr/bin/transmission-daemon"'
+    File.exists? "/usr/bin/transmission-daemon"
   }
   meet {
     log_shell "installing transmission", "apt-get install transmission-daemon", :sudo => true
