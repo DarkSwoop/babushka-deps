@@ -3,14 +3,7 @@
 # ENV['APP_INSTALLER_TRANSMISSION_USERNAME']
 # ENV['APP_INSTALLER_TRANSMISSION_PORT']
 
-dep "transmission install" do
-  met? {
-    File.exists? "/usr/bin/transmission-daemon"
-  }
-  meet {
-    log_shell "installing transmission", "apt-get install transmission-daemon", :sudo => true
-  }
-end
+dep "transmission-daemon.managed"
 
 dep "disable transmission autostart" do
   met? {
@@ -69,7 +62,7 @@ dep "start transmission" do
 end
 
 dep "transmission full install" do
-  requires 'transmission install', 'disable transmission autostart', 'stop transmission service', 'configure transmission', 'start transmission'
+  requires 'transmission-daemon.managed', 'disable transmission autostart', 'stop transmission service', 'configure transmission', 'start transmission'
 end
 
 dep "remove transmission configuration" do
