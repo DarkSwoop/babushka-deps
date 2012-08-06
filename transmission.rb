@@ -45,7 +45,8 @@ dep "configure transmission" do
       "rpc-password": "#{ENV['APP_INSTALLER_TRANSMISSION_PASSWORD']}",
       "rpc-username": "#{ENV['APP_INSTALLER_TRANSMISSION_USERNAME']}",
       "rpc-port": #{ENV['APP_INSTALLER_TRANSMISSION_PORT'].to_i},
-      "rpc-authentication-required": true
+      "rpc-authentication-required": true,
+      "umask": 7
     }
     TRANSMISSION_CONFIG
     log_shell("writing configuration to settings.json", "cat > /home/protonet/.config/transmission-daemon/settings.json", :input => transmission_configuration)
